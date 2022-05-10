@@ -1,6 +1,19 @@
 import React from 'react';
-export function Header() {
+
+
+type HeaderPropsType = {
+    title: string
+    text: string
+}
+
+
+
+export function Header(props: HeaderPropsType) {
+    console.log(props);
     return (
-        <header>Шапка</header>
+        <header>
+            <h2>{props.title}</h2>
+            <p>{props.text}</p>
+        </header>
     )
 }

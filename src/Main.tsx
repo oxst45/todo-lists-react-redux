@@ -1,6 +1,16 @@
 import React from 'react';
-export function Main() {
+
+type MainPropsType = {
+    isDone: boolean
+    text: string
+}
+export function Main(props: MainPropsType) {
     return (
-        <main>Тело сайта</main>
+        <main>
+            {props.isDone}
+            <p>
+                {props.text}
+        </p>
+            </main>
     )
 }
