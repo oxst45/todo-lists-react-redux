@@ -23,8 +23,6 @@ export function ts() {
         age: 25,
         name: "noname",
         address: {
-
-
         }
     }
 
