@@ -10,7 +10,7 @@ export function OnOff() {
     // Задача по клику на on - загорается зеленым;
     // Задача по клику на off - загорается красным;
 
-    // const res = useState(true); // Array with two parametres
+    // const res = useState(true); // Array with two parameters
     // let isOn = res[0]; // State value
     // const setOn = res[1]; // The function that changes state
 
