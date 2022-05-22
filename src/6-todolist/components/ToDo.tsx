@@ -2,6 +2,16 @@ import React from "react";
 
 
 export function ToDo(props: any) {
+    const OnClickAllHandler  = () => {
+        props.filterTechnology('All');
+    }
+    const OnClickAcquaintedHandler = () => {
+        console.log('Acquainted')
+        props.filterTechnology('Acquainted');
+    }
+    const OnClickStudyingHandler = () => {
+        props.filterTechnology('Studying');
+    }
     return (
         <div>
             <div>
@@ -13,9 +23,9 @@ export function ToDo(props: any) {
                 {props.technologiesList}
                 </ul>
             </div>
-            <button>All</button>
-            <button>Acquainted with</button>
-            <button>In process</button>
+            <button onClick={OnClickAllHandler}>All</button>
+            <button onClick={OnClickAcquaintedHandler}>Acquainted with</button>
+            <button onClick={OnClickStudyingHandler}>Studying</button>
         </div>
     );
 }

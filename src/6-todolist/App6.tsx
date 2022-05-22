@@ -18,7 +18,22 @@ const technologiesArray: TechnologiesArrayType = [
 ]
 
 export function App6() {
-    const technologiesList: any = technologiesArray.map((tech) => {
+    let filteredTechnologiesArray: TechnologiesArrayType = technologiesArray;
+    const filterTechnology = (filter: 'All' | 'Acquainted' | 'Studying') => {
+        if (filter === 'All') {
+            filteredTechnologiesArray = technologiesArray;
+        }
+        if (filter === 'Studying') {
+            filteredTechnologiesArray = technologiesArray.filter((tech) => !tech.isDone);
+        }
+        if (filter === 'Acquainted') {
+            filteredTechnologiesArray = technologiesArray.filter((tech) => tech.isDone);
+        }
+
+    }
+
+
+    const technologiesList = filteredTechnologiesArray.map((tech) => {
         return (
             <li>
             <button>Delete</button>
@@ -27,9 +42,14 @@ export function App6() {
             </li>
         )
     });
+
+
     return (
         <div>
-            <ToDo/>
+            <ToDo
+                technologiesList={technologiesList}
+                filterTechnology={filterTechnology}
+            />
         </div>
     );
 }
