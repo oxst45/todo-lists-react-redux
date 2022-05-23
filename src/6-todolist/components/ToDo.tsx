@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import {TechnologiesArrayType, TechnologyType} from "../App6";
 
 type ToDoListPropsType = {
@@ -7,8 +7,24 @@ type ToDoListPropsType = {
 };
 
 export function ToDo(props: any) {
+    const [filter, setFilter] = useState('All');
+    type FilterTechnologyType = (newFilter: 'All' | 'Acquainted' | 'Studying') => void;
 
-    const technologiesList = props.filteredTechnologiesArray.map((tech: TechnologyType) => {
+    const changeTechnologiesList: FilterTechnologyType = (newFilter) => {
+
+        setFilter(newFilter);
+    }
+
+    let filteredTechnologiesArray = props.technologies;
+
+    if (filter === 'Studying') {
+        filteredTechnologiesArray = props.technologies.filter((tech: TechnologyType) => !tech.isDone);
+    }
+    if (filter === 'Acquainted') {
+        filteredTechnologiesArray = props.technologies.filter((tech: TechnologyType) => tech.isDone);
+    }
+
+    const technologiesList = filteredTechnologiesArray.map((tech: TechnologyType) => {
         type onClickDeleteHandlerType = (id: number) => void;
         const onClickDeleteHandler:onClickDeleteHandlerType = (id) => {
             props.deleteTechnology(id);
@@ -23,14 +39,14 @@ export function ToDo(props: any) {
     });
 
     const OnClickAllHandler  = () => {
-        props.changeTechnologiesList('All');
+        changeTechnologiesList('All');
     }
     const OnClickAcquaintedHandler = () => {
         console.log('Acquainted')
-        props.changeTechnologiesList('Acquainted');
+        changeTechnologiesList('Acquainted');
     }
     const OnClickStudyingHandler = () => {
-        props.changeTechnologiesList('Studying');
+        changeTechnologiesList('Studying');
     }
     return (
         <div>
@@ -51,10 +67,3 @@ export function ToDo(props: any) {
     );
 }
 
-// 1. Перенести процесс фильтрации, проверить, что всё работает.
-
-// 2. И если всё работает, то перенести процесс удаления из App to Todolist
-
-// 3. Затем обратно процесс удаления
-
-// 4. И если всё работает, то и фильтрацию

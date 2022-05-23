@@ -24,26 +24,12 @@ export function App6() {
     const deleteTechnology = (id: number) => {setTechnology(
         technologies.filter((t) => t.id !== id)
     )}
-    const [filter, setFilter] = useState('All');
 
 
 
 
-    type FilterTechnologyType = (newFilter: 'All' | 'Acquainted' | 'Studying') => void;
 
-    const changeTechnologiesList: FilterTechnologyType = (newFilter) => {
 
-        setFilter(newFilter);
-    }
-
-        let filteredTechnologiesArray = technologies;
-
-        if (filter === 'Studying') {
-            filteredTechnologiesArray = technologies.filter((tech) => !tech.isDone);
-        }
-        if (filter === 'Acquainted') {
-            filteredTechnologiesArray = technologies.filter((tech) => tech.isDone);
-        }
 
 
 
@@ -54,9 +40,10 @@ export function App6() {
     return (
         <div>
             <ToDo
-                filteredTechnologiesArray={filteredTechnologiesArray}
-                changeTechnologiesList={changeTechnologiesList}
+                // filteredTechnologiesArray={filteredTechnologiesArray}
+                // changeTechnologiesList={changeTechnologiesList}
                 deleteTechnology={deleteTechnology}
+                technologies={technologies}
             />
         </div>
     );
