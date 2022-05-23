@@ -1,7 +1,20 @@
 import React from "react";
+import {TechnologiesArrayType, TechnologyType} from "../App6";
 
+type ToDoListPropsType = TechnologiesArrayType;
 
-export function ToDo(props: any) {
+export function ToDo(props: TechnologiesArrayType) {
+
+    const technologiesList = props.technologiesArray.map((tech: TechnologyType) => {
+        return (
+            <li>
+                <button>Delete</button>
+                <p>{tech.tech}</p>
+                <input type="checkbox" checked={tech.isDone}/>
+            </li>
+        )
+    });
+
     const OnClickAllHandler  = () => {
         props.filterTechnology('All');
     }
@@ -14,13 +27,14 @@ export function ToDo(props: any) {
     }
     return (
         <div>
+            <h3>TODOLIST</h3>
             <div>
                 <input type="text"/>
                 <button>Submit</button>
             </div>
             <div>
                 <ul>
-                {props.technologiesList}
+                {technologiesList}
                 </ul>
             </div>
             <button onClick={OnClickAllHandler}>All</button>

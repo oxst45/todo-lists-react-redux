@@ -1,12 +1,13 @@
 import React from 'react';
 import {ToDo} from "./components/ToDo";
 
-type TechnologyType = {
+export type TechnologyType = {
     id: number
     tech: string
     isDone: boolean
 }
-type TechnologiesArrayType = Array<TechnologyType>;
+export type TechnologiesArrayType = Array<TechnologyType>;
+
 const technologiesArray: TechnologiesArrayType = [
     {id: 1, tech: 'HTML', isDone: true},
     {id: 2, tech: 'CSS', isDone: true},
@@ -33,22 +34,14 @@ export function App6() {
     }
 
 
-    const technologiesList = filteredTechnologiesArray.map((tech) => {
-        return (
-            <li>
-            <button>Delete</button>
-                <p>{tech.tech}</p>
-                <input type="checkbox" checked={tech.isDone}/>
-            </li>
-        )
-    });
+
 
 
     return (
         <div>
             <ToDo
-                technologiesList={technologiesList}
-                filterTechnology={filterTechnology}
+                technologiesArray={technologiesArray}
+                // filterTechnology={filterTechnology}
             />
         </div>
     );
