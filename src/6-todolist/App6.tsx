@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {ToDo} from "./components/ToDo";
 
 export type TechnologyType = {
@@ -8,30 +8,44 @@ export type TechnologyType = {
 }
 export type TechnologiesArrayType = Array<TechnologyType>;
 
-const technologiesArray: TechnologiesArrayType = [
-    {id: 1, tech: 'HTML', isDone: true},
-    {id: 2, tech: 'CSS', isDone: true},
-    {id: 3, tech: 'LESS', isDone: false},
-    {id: 4, tech: 'JS', isDone: true},
-    {id: 5, tech: 'React', isDone: false},
-    {id: 6, tech: 'TS', isDone: false},
-    {id: 7, tech: 'Redux', isDone: false}
-]
+
 
 export function App6() {
-    let filteredTechnologiesArray: TechnologiesArrayType = technologiesArray;
-    const filterTechnology = (filter: 'All' | 'Acquainted' | 'Studying') => {
-        if (filter === 'All') {
-            filteredTechnologiesArray = technologiesArray;
-        }
+    const [technologies, setTechnology] = useState([
+        {id: 1, tech: 'HTML', isDone: true},
+        {id: 2, tech: 'CSS', isDone: true},
+        {id: 3, tech: 'LESS', isDone: false},
+        {id: 4, tech: 'JS', isDone: true},
+        {id: 5, tech: 'React', isDone: false},
+        {id: 6, tech: 'TS', isDone: false},
+        {id: 7, tech: 'Redux', isDone: false}
+    ])
+
+    const deleteTechnology = (id: number) => {setTechnology(
+        technologies.filter((t) => t.id !== id)
+    )}
+    const [filter, setFilter] = useState('All');
+
+
+
+
+    type FilterTechnologyType = (newFilter: 'All' | 'Acquainted' | 'Studying') => void;
+
+    const changeTechnologiesList: FilterTechnologyType = (newFilter) => {
+
+        setFilter(newFilter);
+    }
+
+        let filteredTechnologiesArray = technologies;
+
         if (filter === 'Studying') {
-            filteredTechnologiesArray = technologiesArray.filter((tech) => !tech.isDone);
+            filteredTechnologiesArray = technologies.filter((tech) => !tech.isDone);
         }
         if (filter === 'Acquainted') {
-            filteredTechnologiesArray = technologiesArray.filter((tech) => tech.isDone);
+            filteredTechnologiesArray = technologies.filter((tech) => tech.isDone);
         }
 
-    }
+
 
 
 
@@ -40,8 +54,9 @@ export function App6() {
     return (
         <div>
             <ToDo
-                technologiesArray={technologiesArray}
-                // filterTechnology={filterTechnology}
+                filteredTechnologiesArray={filteredTechnologiesArray}
+                changeTechnologiesList={changeTechnologiesList}
+                deleteTechnology={deleteTechnology}
             />
         </div>
     );
