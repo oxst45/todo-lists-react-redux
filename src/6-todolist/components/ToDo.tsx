@@ -15,7 +15,6 @@ type PropsType = {
 };
 
 
-
 export function ToDo(props: PropsType) {
     const [inputValue, setInputValue] = useState('');
 
@@ -23,8 +22,11 @@ export function ToDo(props: PropsType) {
         setInputValue(event.target.value);
     }
     const onClickSubmitHandler = () => {
-        props.addNewTech(inputValue);
-        setInputValue('')
+        if (inputValue.trim()) {
+            props.addNewTech(inputValue.trim());
+            setInputValue('')
+        }
+
     }
 
     const technologiesList = props.filteredTechArray.map((tech: TechnologyType) => {
@@ -34,6 +36,12 @@ export function ToDo(props: PropsType) {
         }
         const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
             props.changeIsDone(tech.id, e.currentTarget.checked);
+        }
+        const onEnterHandler = (e: React.KeyboardEvent<HTMLInputElement>) => {
+            console.log("hello")
+            if (e.key === 'Enter') {
+                onClickSubmitHandler()
+            }
         }
         return (
             <li key={tech.id}>
@@ -48,6 +56,7 @@ export function ToDo(props: PropsType) {
                 <input type="checkbox"
                        onChange={onChangeHandler}
                        checked={tech.isDone}
+                       onKeyDown={onEnterHandler}
                 />
             </li>
         )
