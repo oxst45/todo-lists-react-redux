@@ -1,74 +1,95 @@
-import React, {useState} from "react";
-import {TechnologiesArrayType, TechnologyType} from "../App6";
+import React, {ChangeEvent, useState} from 'react';
+import {FilterType} from '../App6';
+import {TechnologiesArrayType, TechnologyType} from '../../index';
 
-type ToDoListPropsType = {
-    technologies: TechnologiesArrayType;
-    changeTechnologiesList: (newFilter: 'All' | 'Acquainted' | 'Studying') => void;
+type PropsType = {
+    filteredTechArray: TechnologiesArrayType
+
+    changeTechnologiesList: (newFilter: FilterType) => void;
+
+    deleteTechnology: (id: string) => void
+
+    changeIsDone: (id: string, isChecked: boolean) => void
+
+    addNewTech: (newTechName: string) => void
 };
-export function ToDo(props: any) {
+
+
+
+export function ToDo(props: PropsType) {
     const [inputValue, setInputValue] = useState('');
 
-
-    const inputHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const onNewTaskChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
         setInputValue(event.target.value);
-        console.log(inputValue)
+    }
+    const onClickSubmitHandler = () => {
+        props.addNewTech(inputValue);
+        setInputValue('')
     }
 
-    const OnClickSubmitHandler = (inputValue: string) => {
+    const technologiesList = props.filteredTechArray.map((tech: TechnologyType) => {
 
-            const newTechnology = { id: props.technologiesInitialState.length, tech: inputValue, isDone: false };
-        props.setTechnology([...props.technologies, newTechnology]);
-        props.setInitialState([...props.technologiesInitialState, newTechnology]);
-    }
-
-
-    const technologiesList = props.filteredTechnologiesArray.map((tech: TechnologyType) => {
-        let checkClick = tech.isDone;
-        type onClickDeleteHandlerType = (id: number) => void;
-        const onClickDeleteHandler:onClickDeleteHandlerType = (id) => {
+        const onClickDeleteHandler = (id: string) => {
             props.deleteTechnology(id);
         }
-        const onClickCheckedHandler = () => {
-
-            checkClick = !checkClick;
-            tech.isDone = !tech.isDone;
-            let checkedOrNot = tech.isDone;
-            props.changeISDone(tech.id, checkedOrNot);
+        const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+            props.changeIsDone(tech.id, e.currentTarget.checked);
         }
         return (
             <li key={tech.id}>
-                <button onClick={ () => {onClickDeleteHandler(tech.id)}}>Delete</button>
-                <p>{tech.tech}</p>
-                <input type="checkbox" onClick={onClickCheckedHandler} checked={checkClick}/>
+                <button onClick={() => {
+                    onClickDeleteHandler(tech.id)
+                }}>
+                    Delete
+                </button>
+                <p>
+                    {tech.tech}
+                </p>
+                <input type="checkbox"
+                       onChange={onChangeHandler}
+                       checked={tech.isDone}
+                />
             </li>
         )
     });
 
-    const OnClickAllHandler  = () => {
+    const onClickAllHandler = () => {
         props.changeTechnologiesList('All');
     }
-    const OnClickAcquaintedHandler = () => {
+    const onClickAcquaintedHandler = () => {
         props.changeTechnologiesList('Acquainted');
     }
-    const OnClickStudyingHandler = () => {
+    const onClickStudyingHandler = () => {
         props.changeTechnologiesList('Studying');
     }
     return (
         <div>
             <h3>TODOLIST</h3>
             <div>
-                <input type="text" value={inputValue} onChange={inputHandler}/>
-                <button onClick={() => {OnClickSubmitHandler(inputValue)}}>Submit</button>
+                <input type="text"
+                       value={inputValue}
+                       onChange={onNewTaskChangeHandler}
+                />
+                <button onClick={onClickSubmitHandler}>
+                    Submit
+                </button>
             </div>
             <div>
                 <ul>
-                {technologiesList}
+                    {technologiesList}
                 </ul>
             </div>
-            <button onClick={OnClickAllHandler}>All</button>
-            <button onClick={OnClickAcquaintedHandler}>Acquainted with</button>
-            <button onClick={OnClickStudyingHandler}>Studying</button>
+            <button onClick={onClickAllHandler}>
+                All
+            </button>
+            <button onClick={onClickAcquaintedHandler}>
+                Acquainted with
+            </button>
+            <button onClick={onClickStudyingHandler}>
+                Studying
+            </button>
         </div>
     );
 }
+
 

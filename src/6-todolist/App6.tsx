@@ -1,69 +1,71 @@
 import React, {useState} from 'react';
-import {ToDo} from "./components/ToDo";
+import {ToDo} from './components/ToDo';
+import {TechnologiesArrayType, TechnologyType} from '../index';
+import {v1} from 'uuid';
 
 
-export type TechnologyType = {
-    id: number
-    tech: string
-    isDone: boolean
+export type FilterType = 'All' | 'Acquainted' | 'Studying';
+
+type PropsType = {
+    technologiesInitialState: TechnologiesArrayType
 }
-export type TechnologiesArrayType = Array<TechnologyType>;
 
+export function App6(props: PropsType) {
 
-
-export function App6() {
-const technologiesInitialState = [
-        {id: 1, tech: 'HTML', isDone: true},
-        {id: 2, tech: 'CSS', isDone: true},
-        {id: 3, tech: 'LESS', isDone: false},
-        {id: 4, tech: 'JS', isDone: true},
-        {id: 5, tech: 'React', isDone: false},
-        {id: 6, tech: 'TS', isDone: false},
-        {id: 7, tech: 'Redux', isDone: false}
-    ]
-    const [InitialState, setInitialState] = useState(technologiesInitialState)
-        const [technologies, setTechnology] = useState(technologiesInitialState)
-
-        const deleteTechnology = (id: number) => {setTechnology(
+    const [technologies, setTechnology] = useState(props.technologiesInitialState)
+    const deleteTechnology = (id: string) => {
+        setTechnology(
             technologies.filter((t) => t.id !== id)
-        )}
+        )
+    }
 
-    type ChangeISDoneType = (id: number, checkedOrNot: boolean) => void;
-    const changeISDone: ChangeISDoneType = (id: number, checkedOrNot: boolean) => {
-        setTechnology(technologies.map((t) => t.id === id ? t = {id: t.id, tech: t.tech, isDone: checkedOrNot} : t))
+    const addNewTech = (newTechName: string) =>{
+        const newTech: TechnologyType = {
+            id: v1(),
+            tech: newTechName,
+            isDone: false
+        };
+        setTechnology([...technologies, newTech]);
+    }
+
+    // type ChangeIsDoneType = (id: number, checkedOrNot: boolean) => void;
+    // const changeISDone: ChangeIsDoneType = (id, checkedOrNot) => {
+    //     setTechnology(technologies.map((t) => t.id === id ? t = {id: t.id, tech: t.tech, isDone: checkedOrNot} : t))
+    // }
+
+    const changeIsDone = (id: string, isChecked: boolean) => {
+        setTechnology(technologies.map(
+                (t) => t.id === id ? {id: t.id, tech: t.tech, isDone: isChecked} : t
+            )
+        )
     }
 
     const [filter, setFilter] = useState('All');
-    type FilterTechnologyType = (newFilter: 'All' | 'Acquainted' | 'Studying') => void;
-
-    const changeTechnologiesList: FilterTechnologyType = (newFilter) => {
-
+    const changeTechnologiesList = (newFilter: FilterType) => {
         setFilter(newFilter);
     }
-
-    let filteredTechnologiesArray = technologies;
-
+    let filteredTechArray = technologies;
     if (filter === 'Studying') {
-        filteredTechnologiesArray = technologies.filter((tech: TechnologyType) => !tech.isDone);
+        filteredTechArray = technologies.filter((tech) => !tech.isDone
+        );
     }
     if (filter === 'Acquainted') {
-        filteredTechnologiesArray = technologies.filter((tech: TechnologyType) => tech.isDone);
+        filteredTechArray = technologies.filter((tech) => tech.isDone
+        );
     }
 
     return (
         <div>
             <ToDo
-                filteredTechnologiesArray={filteredTechnologiesArray}
-                technologiesInitialState={technologiesInitialState}
-                setInitialState={setInitialState}
+                filteredTechArray={filteredTechArray}
                 changeTechnologiesList={changeTechnologiesList}
                 deleteTechnology={deleteTechnology}
-                technologies={technologies}
-                setTechnology={setTechnology}
-                setFilter={setFilter}
-                changeISDone={changeISDone}
+                changeIsDone={changeIsDone}
+                addNewTech={addNewTech}
             />
         </div>
     );
 }
+
+
 
