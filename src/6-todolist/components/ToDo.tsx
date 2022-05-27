@@ -22,6 +22,7 @@ export function ToDo(props: PropsType) {
 
     const onNewTaskChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
         setInputValue(event.target.value);
+        setError("");
     }
     const onClickSubmitHandler = () => {
         if (inputValue.trim()) {
