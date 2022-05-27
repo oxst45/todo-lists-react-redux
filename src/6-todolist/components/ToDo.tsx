@@ -1,6 +1,7 @@
 import React, {ChangeEvent, useState} from 'react';
 import {FilterType} from '../App6';
 import {TechnologiesArrayType, TechnologyType} from '../../index';
+import styles from "./ToDo.module.css";
 
 type PropsType = {
     filteredTechArray: TechnologiesArrayType
@@ -17,6 +18,7 @@ type PropsType = {
 
 export function ToDo(props: PropsType) {
     const [inputValue, setInputValue] = useState('');
+    const [error, setError] = useState("");
 
     const onNewTaskChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
         setInputValue(event.target.value);
@@ -25,6 +27,8 @@ export function ToDo(props: PropsType) {
         if (inputValue.trim()) {
             props.addNewTech(inputValue.trim());
             setInputValue('')
+        } else {
+            setError("error");
         }
 
     }
@@ -37,12 +41,7 @@ export function ToDo(props: PropsType) {
         const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
             props.changeIsDone(tech.id, e.currentTarget.checked);
         }
-        const onEnterHandler = (e: React.KeyboardEvent<HTMLInputElement>) => {
-            console.log("hello")
-            if (e.key === 'Enter') {
-                onClickSubmitHandler()
-            }
-        }
+
         return (
             <li key={tech.id}>
                 <button onClick={() => {
@@ -56,8 +55,9 @@ export function ToDo(props: PropsType) {
                 <input type="checkbox"
                        onChange={onChangeHandler}
                        checked={tech.isDone}
-                       onKeyDown={onEnterHandler}
+
                 />
+
             </li>
         )
     });
@@ -71,6 +71,12 @@ export function ToDo(props: PropsType) {
     const onClickStudyingHandler = () => {
         props.changeTechnologiesList('Studying');
     }
+    const onEnterHandler = (e: React.KeyboardEvent<HTMLButtonElement>) => {
+        console.log("hello")
+        if (e.key === 'Enter') {
+            onClickSubmitHandler()
+        }
+    }
     return (
         <div>
             <h3>TODOLIST</h3>
@@ -79,10 +85,14 @@ export function ToDo(props: PropsType) {
                        value={inputValue}
                        onChange={onNewTaskChangeHandler}
                 />
-                <button onClick={onClickSubmitHandler}>
+                <button onClick={onClickSubmitHandler}
+                        onKeyDown={onEnterHandler}>
                     Submit
                 </button>
             </div>
+            {error && <div className={styles.invalid}>
+                Invalid value!
+            </div>}
             <div>
                 <ul>
                     {technologiesList}
