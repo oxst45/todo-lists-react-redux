@@ -2,3 +2,11 @@
     color: darkred;
     font-weight: bold;
 }
+.checked {
+
+}
+.unchecked {
+    color: grey;
+    text-decoration: line-through;
+    text-decoration-color: grey;
+}

@@ -1,4 +1,4 @@
-import React, {ChangeEvent, useState} from 'react';
+import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
 import {FilterType} from '../App6';
 import {TechnologiesArrayType, TechnologyType} from '../../index';
 import styles from "./ToDo.module.css";
@@ -39,12 +39,14 @@ export function ToDo(props: PropsType) {
         const onClickDeleteHandler = (id: string) => {
             props.deleteTechnology(id);
         }
+        const checkedStylesChanger = tech.isDone ? styles.checked : styles.unchecked;
         const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
             props.changeIsDone(tech.id, e.currentTarget.checked);
         }
 
         return (
-            <li key={tech.id}>
+
+            <li key={tech.id} >
                 <button onClick={() => {
                     onClickDeleteHandler(tech.id)
                 }}>
@@ -56,7 +58,7 @@ export function ToDo(props: PropsType) {
                 <input type="checkbox"
                        onChange={onChangeHandler}
                        checked={tech.isDone}
-
+                       className={checkedStylesChanger}
                 />
 
             </li>
@@ -72,7 +74,7 @@ export function ToDo(props: PropsType) {
     const onClickStudyingHandler = () => {
         props.changeTechnologiesList('Studying');
     }
-    const onEnterHandler = (e: React.KeyboardEvent<HTMLButtonElement>) => {
+    const onEnterHandler = (e: KeyboardEvent<HTMLInputElement>) => {
         console.log("hello")
         if (e.key === 'Enter') {
             onClickSubmitHandler()
@@ -85,9 +87,10 @@ export function ToDo(props: PropsType) {
                 <input type="text"
                        value={inputValue}
                        onChange={onNewTaskChangeHandler}
+                       onKeyDown={onEnterHandler}
                 />
                 <button onClick={onClickSubmitHandler}
-                        onKeyDown={onEnterHandler}>
+                        >
                     Submit
                 </button>
             </div>
