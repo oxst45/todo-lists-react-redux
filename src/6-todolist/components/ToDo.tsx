@@ -1,9 +1,17 @@
 import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
-import {FilterType} from '../App6';
+import {FilterType, TasksType} from '../App6';
 import {TechnologiesArrayType, TechnologyType} from '../../index';
 import styles from "./ToDo.module.css";
 
 type PropsType = {
+    tasks: TasksType
+
+    todolistID: string
+
+    title: string
+
+    filter: FilterType
+
     filteredTechArray: TechnologiesArrayType
 
     changeTechnologiesList: (newFilter: FilterType) => void;
@@ -17,7 +25,7 @@ type PropsType = {
 
 
 export function ToDo(props: PropsType) {
-    const [inputValue, setInputValue] = useState('');
+    const [inputValue, setInputValue] = useState("");
     const [error, setError] = useState("");
 
     const onNewTaskChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
@@ -27,37 +35,37 @@ export function ToDo(props: PropsType) {
     const onClickSubmitHandler = () => {
         if (inputValue.trim()) {
             props.addNewTech(inputValue.trim());
-            setInputValue('')
+            setInputValue("")
         } else {
             setError("error");
         }
 
     }
 
-    const technologiesList = props.filteredTechArray.map((tech: TechnologyType) => {
+    const technologiesList = props.tasks[props.todolistID].map((t: TechnologyType) => {
 
         const onClickDeleteHandler = (id: string) => {
             props.deleteTechnology(id);
         }
-        const checkedStylesChanger = tech.isDone ? styles.checked : styles.unchecked;
+        const checkedStylesChanger = t.isDone ? styles.checked : styles.unchecked;
         const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-            props.changeIsDone(tech.id, e.currentTarget.checked);
+            props.changeIsDone(t.id, e.currentTarget.checked);
         }
 
         return (
 
-            <li key={tech.id} >
+            <li key={t.id}>
                 <button onClick={() => {
-                    onClickDeleteHandler(tech.id)
+                    onClickDeleteHandler(t.id)
                 }}>
                     Delete
                 </button>
                 <p>
-                    {tech.tech}
+                    {t.title}
                 </p>
                 <input type="checkbox"
                        onChange={onChangeHandler}
-                       checked={tech.isDone}
+                       checked={t.isDone}
                        className={checkedStylesChanger}
                 />
 
@@ -82,7 +90,7 @@ export function ToDo(props: PropsType) {
     }
     return (
         <div>
-            <h3>TODOLIST</h3>
+            <h3>{props.title}</h3>
             <div>
                 <input type="text"
                        value={inputValue}
@@ -90,7 +98,7 @@ export function ToDo(props: PropsType) {
                        onKeyDown={onEnterHandler}
                 />
                 <button onClick={onClickSubmitHandler}
-                        >
+                >
                     Submit
                 </button>
             </div>

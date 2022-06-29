@@ -13,22 +13,23 @@ const root = ReactDOM.createRoot(
 
 export type TechnologyType = {
     id: string
-    tech: string
+    title: string
     isDone: boolean
 }
 export type TechnologiesArrayType = Array<TechnologyType>;
-const technologiesInitialState: TechnologiesArrayType = [
-    {id: v1(), tech: 'HTML', isDone: true},
-    {id: v1(), tech: 'CSS', isDone: true},
-    {id: v1(), tech: 'LESS', isDone: false},
-    {id: v1(), tech: 'JS', isDone: true},
-    {id: v1(), tech: 'React', isDone: false},
-    {id: v1(), tech: 'TS', isDone: false},
-    {id: v1(), tech: 'Redux', isDone: false}
-]
+// const technologiesInitialState: TechnologiesArrayType = [
+//     {id: v1(), tech: 'HTML', isDone: true},
+//     {id: v1(), tech: 'CSS', isDone: true},
+//     {id: v1(), tech: 'LESS', isDone: false},
+//     {id: v1(), tech: 'JS', isDone: true},
+//     {id: v1(), tech: 'React', isDone: false},
+//     {id: v1(), tech: 'TS', isDone: false},
+//     {id: v1(), tech: 'Redux', isDone: false}
+// ]
 
 root.render(
-    <App  technologiesInitialState={technologiesInitialState}/>
+    // <App  technologiesInitialState={technologiesInitialState}/>
+    <App/>
 );
 
 

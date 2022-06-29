@@ -9,12 +9,12 @@ import {TechnologiesArrayType, TechnologyType} from './index';
 type PropsType = {
     technologiesInitialState: TechnologiesArrayType
 }
-function App(props: PropsType) {
+function App() {
 
     return (
         <div className="App">
-            {/*<App2/>*/}
-            <App6  technologiesInitialState={props.technologiesInitialState}/>
+            <App6/>
+            {/*<App6  technologiesInitialState={props.technologiesInitialState}/>*/}
         </div>
     );
 }
