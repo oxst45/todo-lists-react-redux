@@ -1,9 +1,12 @@
 import React, {useState} from 'react';
 import {ToDo} from './components/ToDo';
-import {TechnologiesArrayType, TechnologyType} from '../index';
 import {v1} from 'uuid';
 
-
+export type TaskType = {
+    id: string
+    title: string
+    isDone: boolean
+}
 export type FilterType = 'All' | 'Acquainted' | 'Studying';
 
 export type TodoListType = {
@@ -13,7 +16,7 @@ export type TodoListType = {
 }
 
 export type TasksType = {
-    [todoListID: string]: Array<TechnologyType>
+    [todoListID: string]: Array<TaskType>
 }
 
 export function App6() {
@@ -43,26 +46,18 @@ export function App6() {
         ]
     });
 
-    const deleteTechnology = (id: string) => {
-        // setTechnology(
-        //     technologies.filter((t) => t.id !== id)
-        // )
+    const deleteTask = (todolistID: string, id: string) => {
+        setTasks({...tasks, [todolistID]: tasks[todolistID].filter((t) => t.id !== id)})
+    }
+    const addTask = (todolistID: string, taskTitle: string) => {
+        const newTask = {
+            id: v1(),
+            title: taskTitle,
+            isDone: false
+        }
+        setTasks({...tasks, [todolistID]: [newTask, ...tasks[todolistID]]})
     }
 
-    const addNewTech = (newTechName: string) => {
-        // const newTech: TechnologyType = {
-        //     id: v1(),
-        //     tech: newTechName,
-        //     isDone: false
-        // };
-        // setTechnology([...technologies, newTech]);
-    }
-
-    // // type ChangeIsDoneType = (id: number, checkedOrNot: boolean) => void;
-    // // const changeISDone: ChangeIsDoneType = (id, checkedOrNot) => {
-    // //     setTechnology(technologies.map((t) => t.id === id ? t = {id: t.id, tech: t.tech, isDone: checkedOrNot} : t))
-    // // }
-    //
     const changeIsDone = (id: string, isChecked: boolean) => {
         // setTechnology(technologies.map(
         //         (t) => t.id === id ? {id: t.id, tech: t.tech, isDone: isChecked} : t
@@ -93,11 +88,11 @@ export function App6() {
                     todolistID={tl.id}
                     title={tl.title}
                     filter={tl.filter}
-                    filteredTechArray={filteredTechArray}
+                    // filteredTechArray={filteredTechArray}
                     changeTechnologiesList={changeTechnologiesList}
-                    deleteTechnology={deleteTechnology}
+                    deleteTask={deleteTask}
                     changeIsDone={changeIsDone}
-                    addNewTech={addNewTech}
+                    addTask={addTask}
                 />
             </div>
         );

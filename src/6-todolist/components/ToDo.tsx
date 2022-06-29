@@ -1,6 +1,5 @@
 import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
-import {FilterType, TasksType} from '../App6';
-import {TechnologiesArrayType, TechnologyType} from '../../index';
+import {FilterType, TasksType, TaskType} from '../App6';
 import styles from "./ToDo.module.css";
 
 type PropsType = {
@@ -12,15 +11,13 @@ type PropsType = {
 
     filter: FilterType
 
-    filteredTechArray: TechnologiesArrayType
-
     changeTechnologiesList: (newFilter: FilterType) => void;
 
-    deleteTechnology: (id: string) => void
+    deleteTask: (todolistID: string, id: string) => void
 
     changeIsDone: (id: string, isChecked: boolean) => void
 
-    addNewTech: (newTechName: string) => void
+    addTask: (todolistID: string, taskTitle: string) => void
 };
 
 
@@ -34,7 +31,7 @@ export function ToDo(props: PropsType) {
     }
     const onClickSubmitHandler = () => {
         if (inputValue.trim()) {
-            props.addNewTech(inputValue.trim());
+            props.addTask(props.todolistID, inputValue.trim());
             setInputValue("")
         } else {
             setError("error");
@@ -42,10 +39,10 @@ export function ToDo(props: PropsType) {
 
     }
 
-    const technologiesList = props.tasks[props.todolistID].map((t: TechnologyType) => {
+    const technologiesList = props.tasks[props.todolistID].map((t: TaskType) => {
 
         const onClickDeleteHandler = (id: string) => {
-            props.deleteTechnology(id);
+            props.deleteTask(props.todolistID, id);
         }
         const checkedStylesChanger = t.isDone ? styles.checked : styles.unchecked;
         const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
