@@ -15,9 +15,9 @@ type PropsType = {
 
     deleteTask: (todolistID: string, id: string) => void
 
-    changeIsDone: (id: string, isChecked: boolean) => void
-
     addTask: (todolistID: string, taskTitle: string) => void
+
+    changeTaskStatus: (todolistID: string, taskID: string, isDone: boolean) => void
 };
 
 
@@ -46,7 +46,8 @@ export function ToDo(props: PropsType) {
         }
         const checkedStylesChanger = t.isDone ? styles.checked : styles.unchecked;
         const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-            props.changeIsDone(t.id, e.currentTarget.checked);
+
+            props.changeTaskStatus(props.todolistID, t.id, e.currentTarget.checked)
         }
 
         return (

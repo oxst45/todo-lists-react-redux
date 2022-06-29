@@ -57,13 +57,13 @@ export function App6() {
         }
         setTasks({...tasks, [todolistID]: [newTask, ...tasks[todolistID]]})
     }
-
-    const changeIsDone = (id: string, isChecked: boolean) => {
-        // setTechnology(technologies.map(
-        //         (t) => t.id === id ? {id: t.id, tech: t.tech, isDone: isChecked} : t
-        //     )
-        // )
+    const changeTaskStatus = (todolistID: string, taskID: string, isDone: boolean) => {
+        setTasks({
+            ...tasks,
+            [todolistID]: tasks[todolistID].map((t) => t.id === taskID ? {...t, isDone} : t)
+        })
     }
+
 
     const changeTechnologiesList = (newFilter: FilterType) => {
         // setFilter(newFilter);
@@ -90,8 +90,8 @@ export function App6() {
                     filter={tl.filter}
                     // filteredTechArray={filteredTechArray}
                     changeTechnologiesList={changeTechnologiesList}
+                    changeTaskStatus={changeTaskStatus}
                     deleteTask={deleteTask}
-                    changeIsDone={changeIsDone}
                     addTask={addTask}
                 />
             </div>
