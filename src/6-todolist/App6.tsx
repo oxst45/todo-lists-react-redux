@@ -24,7 +24,7 @@ export function App6() {
     let todolistID1 = v1();
     let todolistID2 = v1();
 
-    let [todolists, setTodolists] = useState<Array<TodoListType>>([
+    let [todoLists, setTodoLists] = useState<Array<TodoListType>>([
         {id: todolistID1, title: 'What to learn', filter: 'All'},
         {id: todolistID2, title: 'What to buy', filter: 'All'},
     ])
@@ -45,7 +45,16 @@ export function App6() {
             {id: v1(), title: "Milk", isDone: false},
         ]
     });
-
+    const changeTaskTitle = (todoListID: string, id: string, title: string) => {
+        setTasks({
+            ...tasks,
+            [todoListID]: tasks[todoListID].map((t) => t.id === id ? {...t, tech: title} : t)
+        })
+    }
+    const changeTodolistTitle = (todoListID: string, title: string) => {
+        setTodoLists(todoLists.map((tl) => tl.id === todoListID ? {...tl, title} : tl
+        ))
+    }
     const deleteTask = (todolistID: string, id: string) => {
         setTasks({...tasks, [todolistID]: tasks[todolistID].filter((t) => t.id !== id)})
     }
@@ -80,7 +89,7 @@ export function App6() {
     //     );
     // }
 
-    const todoListComponents = todolists.map((tl) => {
+    const todoListComponents = todoLists.map((tl) => {
         return (
             <div>
                 <ToDo
@@ -93,6 +102,8 @@ export function App6() {
                     changeTaskStatus={changeTaskStatus}
                     deleteTask={deleteTask}
                     addTask={addTask}
+                    changeTaskTitle={changeTaskTitle}
+                    changeTodolistTitle={changeTodolistTitle}
                 />
             </div>
         );

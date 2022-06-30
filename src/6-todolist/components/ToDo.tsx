@@ -1,6 +1,7 @@
 import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
 import {FilterType, TasksType, TaskType} from '../App6';
 import styles from "./ToDo.module.css";
+import {EditableTitle} from "./EditableTitle";
 
 type PropsType = {
     tasks: TasksType
@@ -11,7 +12,11 @@ type PropsType = {
 
     filter: FilterType
 
-    changeTechnologiesList: (newFilter: FilterType) => void;
+    changeTechnologiesList: (newFilter: FilterType) => void
+
+    changeTaskTitle: (todoListID: string, id: string, title: string) => void
+
+    changeTodolistTitle: (todoListID: string, title: string) => void
 
     deleteTask: (todolistID: string, id: string) => void
 
@@ -44,10 +49,13 @@ export function ToDo(props: PropsType) {
         const onClickDeleteHandler = (id: string) => {
             props.deleteTask(props.todolistID, id);
         }
-        const checkedStylesChanger = t.isDone ? styles.checked : styles.unchecked;
+        // const checkedStylesChanger = t.isDone ? styles.checked : styles.unchecked;
         const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
 
             props.changeTaskStatus(props.todolistID, t.id, e.currentTarget.checked)
+        }
+        const editTaskTitle = (title: string) => {
+            props.changeTaskTitle(props.todolistID, t.id, title)
         }
 
         return (
@@ -59,13 +67,12 @@ export function ToDo(props: PropsType) {
                     Delete
                 </button>
                 <p>
-                    {t.title}
+                    <EditableTitle title={t.title}
+                                   editTitle={editTaskTitle}/>
+                    <input type="checkbox"
+                           checked={t.isDone}
+                           onChange={onChangeHandler}/>
                 </p>
-                <input type="checkbox"
-                       onChange={onChangeHandler}
-                       checked={t.isDone}
-                       className={checkedStylesChanger}
-                />
 
             </li>
         )
@@ -86,9 +93,14 @@ export function ToDo(props: PropsType) {
             onClickSubmitHandler()
         }
     }
+    const editTodolistTitle = (title: string) => {
+        props.changeTodolistTitle(props.todolistID, title)
+    }
     return (
         <div>
-            <h3>{props.title}</h3>
+            <h3>
+                <EditableTitle title={props.title} editTitle={editTodolistTitle}/>
+            </h3>
             <div>
                 <input type="text"
                        value={inputValue}
