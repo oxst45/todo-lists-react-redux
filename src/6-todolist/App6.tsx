@@ -7,7 +7,7 @@ export type TaskType = {
     title: string
     isDone: boolean
 }
-export type FilterType = 'All' | 'Acquainted' | 'Studying';
+export type FilterType = 'all' | 'active' | 'completed';
 
 export type TodoListType = {
     id: string
@@ -25,8 +25,8 @@ export function App6() {
     let todolistID2 = v1();
 
     let [todoLists, setTodoLists] = useState<Array<TodoListType>>([
-        {id: todolistID1, title: 'What to learn', filter: 'All'},
-        {id: todolistID2, title: 'What to buy', filter: 'All'},
+        {id: todolistID1, title: 'What to learn', filter: 'all'},
+        {id: todolistID2, title: 'What to buy', filter: 'all'},
     ])
 
     let [tasks, setTasks] = useState<TasksType>({
@@ -58,6 +58,17 @@ export function App6() {
     const deleteTask = (todolistID: string, id: string) => {
         setTasks({...tasks, [todolistID]: tasks[todolistID].filter((t) => t.id !== id)})
     }
+    const deleteTodolist = (todolistID: string) => {
+        setTodoLists(todoLists.filter((tl) => tl.id !== todolistID))
+        delete tasks[todolistID];
+    }
+
+    const switchFilter = (todolistID: string, newFilter: FilterType) => {
+        const newState = todoLists.map((tl) => {
+            return tl.id === todolistID ? { ...tl, filter: newFilter } : tl;
+        })
+        setTodoLists(newState)
+    }
     const addTask = (todolistID: string, taskTitle: string) => {
         const newTask = {
             id: v1(),
@@ -74,20 +85,7 @@ export function App6() {
     }
 
 
-    const changeTechnologiesList = (newFilter: FilterType) => {
-        // setFilter(newFilter);
-    }
 
-    // let filteredTechArray = tasks[tl.id];
-    const filteredTechArray = tasks[todolistID1];
-    // if (filter === 'Studying') {
-    //     filteredTechArray = technologies.filter((tech) => !tech.isDone
-    //     );
-    // }
-    // if (filter === 'Acquainted') {
-    //     filteredTechArray = technologies.filter((tech) => tech.isDone
-    //     );
-    // }
 
     const todoListComponents = todoLists.map((tl) => {
         return (
@@ -97,13 +95,13 @@ export function App6() {
                     todolistID={tl.id}
                     title={tl.title}
                     filter={tl.filter}
-                    // filteredTechArray={filteredTechArray}
-                    changeTechnologiesList={changeTechnologiesList}
                     changeTaskStatus={changeTaskStatus}
                     deleteTask={deleteTask}
                     addTask={addTask}
                     changeTaskTitle={changeTaskTitle}
                     changeTodolistTitle={changeTodolistTitle}
+                    switchFilter={switchFilter}
+                    deleteTodolist={deleteTodolist}
                 />
             </div>
         );

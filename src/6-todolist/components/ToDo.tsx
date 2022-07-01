@@ -12,8 +12,6 @@ type PropsType = {
 
     filter: FilterType
 
-    changeTechnologiesList: (newFilter: FilterType) => void
-
     changeTaskTitle: (todoListID: string, id: string, title: string) => void
 
     changeTodolistTitle: (todoListID: string, title: string) => void
@@ -23,10 +21,19 @@ type PropsType = {
     addTask: (todolistID: string, taskTitle: string) => void
 
     changeTaskStatus: (todolistID: string, taskID: string, isDone: boolean) => void
+    switchFilter: (todolistID: string, newFilter: FilterType) => void
+    deleteTodolist: (todolistID: string) => void
 };
 
 
 export function ToDo(props: PropsType) {
+    let filteredTaskList = props.tasks[props.todolistID]
+    if (props.filter === 'active') {
+        filteredTaskList = props.tasks[props.todolistID].filter((t) => !t.isDone)
+    }
+    if (props.filter === 'completed') {
+        filteredTaskList = props.tasks[props.todolistID].filter((t) => t.isDone)
+    }
     const [inputValue, setInputValue] = useState("");
     const [error, setError] = useState("");
 
@@ -44,7 +51,7 @@ export function ToDo(props: PropsType) {
 
     }
 
-    const technologiesList = props.tasks[props.todolistID].map((t: TaskType) => {
+    const taskList = filteredTaskList.map((t: TaskType) => {
 
         const onClickDeleteHandler = (id: string) => {
             props.deleteTask(props.todolistID, id);
@@ -78,14 +85,18 @@ export function ToDo(props: PropsType) {
         )
     });
 
+
+    const onDelTodolistClickHandler = () => {
+        props.deleteTodolist(props.todolistID);
+    }
     const onClickAllHandler = () => {
-        props.changeTechnologiesList('All');
+        props.switchFilter(props.todolistID,'all');
     }
     const onClickAcquaintedHandler = () => {
-        props.changeTechnologiesList('Acquainted');
+        props.switchFilter(props.todolistID,'completed');
     }
     const onClickStudyingHandler = () => {
-        props.changeTechnologiesList('Studying');
+        props.switchFilter(props.todolistID,'active');
     }
     const onEnterHandler = (e: KeyboardEvent<HTMLInputElement>) => {
         console.log("hello")
@@ -100,6 +111,7 @@ export function ToDo(props: PropsType) {
         <div>
             <h3>
                 <EditableTitle title={props.title} editTitle={editTodolistTitle}/>
+                <button onClick={onDelTodolistClickHandler}>❌</button>
             </h3>
             <div>
                 <input type="text"
@@ -117,7 +129,7 @@ export function ToDo(props: PropsType) {
             </div>}
             <div>
                 <ul>
-                    {technologiesList}
+                    {taskList}
                 </ul>
             </div>
             <button onClick={onClickAllHandler}>
