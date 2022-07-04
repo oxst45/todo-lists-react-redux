@@ -48,7 +48,7 @@ export function App6() {
     const changeTaskTitle = (todoListID: string, id: string, title: string) => {
         setTasks({
             ...tasks,
-            [todoListID]: tasks[todoListID].map((t) => t.id === id ? {...t, tech: title} : t)
+            [todoListID]: tasks[todoListID].map((t) => t.id === id ? {...t, title} : t)
         })
     }
     const changeTodolistTitle = (todoListID: string, title: string) => {
