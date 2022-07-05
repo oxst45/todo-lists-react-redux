@@ -19,7 +19,7 @@ export type TasksType = {
     [todoListID: string]: Array<TaskType>
 }
 
-export function App6() {
+export function AppWithoutReducers() {
 
     let todolistID1 = v1();
     let todolistID2 = v1();

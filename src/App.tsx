@@ -1,15 +1,12 @@
 import React from 'react';
-import {App2} from "./2-props/App2";
-import {App3} from "./3-map/App3";
-import {App4} from "./4-car/App4";
-import {App5} from "./5-homework/App5";
-import {App6} from "./6-todolist/App6";
+// import {AppWithoutReducers} from "./todolist/App-without-reducers";
+import {AppWithReducers} from "./App-with-reducers";
 
 function App() {
 
     return (
         <div className="App">
-            <App6/>
+            <AppWithReducers/>
         </div>
     );
 }

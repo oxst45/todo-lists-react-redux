@@ -1,4 +1,5 @@
-import {FilterType, TodoListType} from '../App6';
+import {FilterType, TodoListType} from '../App-without-reducers';
+import {v1} from "uuid";
 
 export const DELETE_TODOLIST = 'DELETE-TODOLIST'
 export const ADD_TODOLIST = 'ADD-TODOLIST'
@@ -72,10 +73,10 @@ export const removeTodolistAC = (todolistID: string): DeleteTodolistAT => {
     }
 }
 
-export const addTodolistAC = (newTodolistID: string, newTitle: string): AddTodolistAT => {
+export const addTodolistAC = (newTitle: string): AddTodolistAT => {
     return {
         type: ADD_TODOLIST,
-        newTodolistID,
+        newTodolistID: v1(),
         newTitle
     }
 }

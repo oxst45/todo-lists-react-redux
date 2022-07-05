@@ -1,4 +1,4 @@
-import {TasksType} from '../App6';
+import {TasksType} from '../App-without-reducers';
 import {addTaskAC, changeTaskIsDoneAC, changeTaskTitleAC, deleteTaskAC, tasksReducer} from './tasks-reducer';
 import {v1} from 'uuid';
 
@@ -46,7 +46,6 @@ test('New task should be added to beginning of the state', () => {
     // 1. Входные данные
     const testState: TasksType = {
         'todolistID-1': [
-            // {id: 'fds34253-gfs-25424-fsd', tech: 'react', isDone: false},
             {id: '1', title: 'html', isDone: true},
             {id: '2', title: 'css', isDone: true},
             {id: '3', title: 'js', isDone: false},
@@ -58,15 +57,14 @@ test('New task should be added to beginning of the state', () => {
         ]
     }
     // 2. Тестируемая функция
-    const id = v1();
-    const newState = tasksReducer(testState, addTaskAC('todolistID-1', id, 'react'))
+
+    const newState = tasksReducer(testState, addTaskAC('todolistID-1', 'react'))
 
     // 3. Проверка результата (ожидания)
     expect(newState['todolistID-1'].length).toBe(4)
     expect(newState['todolistID-2'].length).toBe(3)
 
     // expect(newState['todolistID-1'][0].id).toBeDefined()
-    expect(newState['todolistID-1'][0].id).toBe(id)
     expect(newState['todolistID-1'][0].title).toBe('react')
     expect(newState['todolistID-1'][0].isDone).toBe(false)
 })

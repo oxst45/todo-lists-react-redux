@@ -1,5 +1,5 @@
 import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
-import {FilterType, TasksType, TaskType} from '../App6';
+import {FilterType, TasksType, TaskType} from '../App-without-reducers';
 import styles from "./ToDo.module.css";
 import {EditableTitle} from "./EditableTitle";
 
@@ -136,10 +136,10 @@ export function ToDo(props: PropsType) {
                 All
             </button>
             <button onClick={onClickAcquaintedHandler}>
-                Acquainted with
+                Done
             </button>
             <button onClick={onClickStudyingHandler}>
-                Studying
+                Active
             </button>
         </div>
     );

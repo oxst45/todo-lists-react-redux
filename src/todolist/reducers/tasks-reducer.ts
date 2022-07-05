@@ -1,11 +1,13 @@
-import {TasksType} from '../App6';
+import {TasksType} from '../App-without-reducers';
+import {addTodolistAC, AddTodolistAT} from "./todolist-reducer";
+import {v1} from "uuid";
 
 const DELETE_TASK = 'DELETE-TASK'
 const ADD_TASK = 'ADD-TASK'
 const CHANGE_TASK_ISDONE = 'CHANGE-TASK-IS-DONE'
 const CHANGE_TASK_TITLE = 'CHANGE-TASK-TITLE'
 
-export type ActionType = DeleteTaskAT | AddTaskAT | ChangeTaskIsDoneAT | ChangeTaskTitleAT
+export type ActionType = DeleteTaskAT | AddTaskAT | ChangeTaskIsDoneAT | ChangeTaskTitleAT | AddTodolistAT
 
 export type DeleteTaskAT = ReturnType<typeof deleteTaskAC>
 export type AddTaskAT = ReturnType<typeof addTaskAC>
@@ -54,11 +56,11 @@ export const deleteTaskAC = (todolistID: string, taskID: string) => {
         taskID
     } as const
 }
-export const addTaskAC = (todolistID: string, taskID: string, title: string) => {
+export const addTaskAC = (todolistID: string, title: string) => {
     return {
         type: ADD_TASK,
         todolistID,
-        taskID,
+        taskID: v1(),
         title
     } as const
 }

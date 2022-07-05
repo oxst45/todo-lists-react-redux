@@ -1,5 +1,5 @@
 import {v1} from 'uuid';
-import {TodoListType} from '../App6';
+import {TodoListType} from '../App-without-reducers';
 
 import {
     addTodolistAC,
@@ -43,18 +43,17 @@ test('Correct todolist should be added', () => {
         // {id: newIdTodolist, title: 'Skills', filter: 'all'}
     ]
     // 2. Вызов тестируемой функции:
-    const newIdTodolist = v1();
+
     // const action: AddTodolistAT = {
     //     type: ADD_TODOLIST,
     //     newTitle: 'Skills',
     //     newTodolistID: newIdTodolist
     // }
-    const newState = todolistReducer(todoLists, addTodolistAC(newIdTodolist, 'Skills'))
+    const newState = todolistReducer(todoLists, addTodolistAC( 'Skills'))
 
     // 3. Проверка результата:
     expect(newState.length).toBe(todoLists.length + 1)
     expect(newState[newState.length - 1].title).toBe('Skills')
-    expect(newState[newState.length - 1].id).toBe(newIdTodolist)
     expect(newState[newState.length - 1].filter).toBe('all')
 })
 
