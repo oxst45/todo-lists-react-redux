@@ -33,7 +33,9 @@ export type ChangeTodolistFilterAT = {
 }
 
 
-export const todolistReducer = (todolists: Array<TodoListType>, action: ActionType): Array<TodoListType> => {
+const initialState: Array<TodoListType> = [];
+
+export const todolistReducer = (todolists = initialState, action: ActionType): Array<TodoListType> => {
 
     switch (action.type) {
         case DELETE_TODOLIST:

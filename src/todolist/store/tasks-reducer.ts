@@ -1,5 +1,5 @@
 import {TasksType} from '../App-without-reducers';
-import {addTodolistAC, AddTodolistAT} from "./todolist-reducer";
+import {addTodolistAC, AddTodolistAT,} from "./todolist-reducer";
 import {v1} from "uuid";
 
 const DELETE_TASK = 'DELETE-TASK'
@@ -14,7 +14,11 @@ export type AddTaskAT = ReturnType<typeof addTaskAC>
 export type ChangeTaskIsDoneAT = ReturnType<typeof changeTaskIsDoneAC>
 export type ChangeTaskTitleAT = ReturnType<typeof changeTaskTitleAC>
 
-export const tasksReducer = (tasks: TasksType, action: ActionType): TasksType => {
+
+
+const initialState: TasksType = {
+}
+export const tasksReducer = (tasks = initialState, action: ActionType): TasksType => {
     switch (action.type) {
         case DELETE_TASK:
             return {
@@ -45,8 +49,11 @@ export const tasksReducer = (tasks: TasksType, action: ActionType): TasksType =>
                 ...tasks,
                 [action.todolistID]: tasks[action.todolistID].map((t) => t.id === action.taskID? {...t, isDone: action.isDone} : t)
             }
+        default:
+            return tasks
     }
-    return tasks
+
+
 }
 
 export const deleteTaskAC = (todolistID: string, taskID: string) => {

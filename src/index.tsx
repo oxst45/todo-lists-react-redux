@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import {Provider} from "react-redux";
+import {appStore} from "./todolist/store/store";
 
 
 const root = ReactDOM.createRoot(
@@ -11,8 +13,9 @@ const root = ReactDOM.createRoot(
 
 
 root.render(
-    // <App  technologiesInitialState={technologiesInitialState}/>
-    <App/>
+    <Provider store={appStore}>
+        <App/>
+    </Provider>
 );
 
 

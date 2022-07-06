@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import {ToDo} from './components/ToDo';
 import {v1} from 'uuid';
+import {AddItemForm} from "./components/AddItemForm";
 
 export type TaskType = {
     id: string
@@ -83,7 +84,9 @@ export function AppWithoutReducers() {
             [todolistID]: tasks[todolistID].map((t) => t.id === taskID ? {...t, isDone} : t)
         })
     }
+    const addTodoList = (newTitle: string) => {
 
+    }
 
 
 
@@ -102,13 +105,16 @@ export function AppWithoutReducers() {
                     changeTodolistTitle={changeTodolistTitle}
                     switchFilter={switchFilter}
                     deleteTodolist={deleteTodolist}
+
                 />
             </div>
         );
     });
     return (
         <div>
+
             {todoListComponents}
+
         </div>
     )
 }
